@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+
 public class PagamentoDAO {
 	private static Map<String,Pagamento> CP = new LinkedHashMap<>();
 	
@@ -20,5 +21,8 @@ public class PagamentoDAO {
 		CP.put("904", new Pagamento.Builder().comCodigo("904").comNome("Dineiro avista").comParcelas(1).create());
 		CP.put("905", new Pagamento.Builder().comCodigo("905").comNome("Cartao 1+2x").comParcelas(2).create());
 		CP.put("906", new Pagamento.Builder().comCodigo("906").comNome("Cartao 1+3x").comParcelas(3).create());
+	}
+	public static void cadastrar(Pagamento pagamento) {
+		CP.put(pagamento.getCodigo(), pagamento);
 	}
 }
