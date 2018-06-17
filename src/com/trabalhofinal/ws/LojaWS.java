@@ -32,16 +32,6 @@ public interface LojaWS {
     @WebMethod
     public Produto buscaProduto(String codigo);
 
-    //funcoes pagamento
-    @WebMethod
-    public List<Pagamento> todosPagamentos();
-
-    @WebMethod
-    public Pagamento inserePagamento(String codigo, String nome, int parcelas);
-
-    @WebMethod
-    public Pagamento buscaPagamento(String codigo);
-
     //funcoes vendedor
     @WebMethod
     public List<Vendedor> todosVendedores();
@@ -51,4 +41,47 @@ public interface LojaWS {
 
     @WebMethod
     Vendedor buscaVendedor(String codigo);
+    
+    //funcoes pagamento
+    @WebMethod
+    public List<Pagamento> todosPagamentos();
+
+   /* @WebMethod
+    public Pagamento inserePagamento(String codigo, String nome, int parcelas);*/
+    
+    @WebResult(name="pagamentoSalvo")
+	@ResponseWrapper(localName="PagamentoSalvoNaBase")
+	public Pagamento inserePagamento(
+			@WebParam(name="pagamentoParaSalvar") Pagamento pagamento) 
+					throws WithoutFieldFault;
+
+    @WebMethod
+    public Pagamento buscaPagamento(@WebParam(name="codigo") String codigo);
+
+    //funcoes pedido
+    @WebResult(name="pedidoSalvo")
+	@ResponseWrapper(localName="PedidoSalvoNaBase")
+	public Pedido inserePedido(
+			@WebParam(name="pedidoParaSalvar") Pedido pedido) 
+					throws WithoutFieldFault;
+
+    @WebMethod
+    public Pedido buscaPedido(@WebParam(name="codigo") String codigo);
+    
+    @WebMethod
+    public List<Pedido> todosPedidos();
+    
+    
+    //funcoes fornecedor
+    @WebResult(name="fornecedorSalvo")
+	@ResponseWrapper(localName="FornecedorSalvoNaBase")
+	public Fornecedor insereFornecedor(
+			@WebParam(name="fornecedorParaSalvar") Fornecedor fornecedor) 
+					throws WithoutFieldFault;
+
+    @WebMethod
+    public Fornecedor buscaFornecedor(@WebParam(name="codigo") String codigo);
+    
+    @WebMethod
+    public List<Fornecedor> todosFornecedores();
 }
