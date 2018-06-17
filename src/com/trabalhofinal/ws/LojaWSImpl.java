@@ -44,8 +44,17 @@ public class LojaWSImpl implements LojaWS {
     }
 
     @Override
-    public Pagamento inserePagamento(String codigo, String nome, int parcelas){
-        return null;
+    public Pagamento inserePagamento(Pagamento pagamento) throws WithoutFieldFault{
+		PagamentoDAO.cadastrar(pagamento);
+		
+		if (pagamento.getCodigo().trim().length() == 0) {
+			throw new WithoutFieldFault("Código inexistente");
+		}
+		if (pagamento.getNome() == null) {
+			throw new WithoutFieldFault("Sem nome válido");
+		}
+		
+		return pagamento;
     }
 
     @Override
@@ -94,5 +103,81 @@ public class LojaWSImpl implements LojaWS {
             }
         }
         return result;
+    }
+    
+    //funcoes pedido
+    @Override
+    public List<Pedido> todosPedidos() {
+        return pedDAO.todosPedidos();
+    }
+    
+    @Override
+    public Pedido buscaPedido(String codigo){
+        List<Pedido> pedidos = pedDAO.todosPedidos();
+        Pedido result = null;
+        for (Pedido pedido : pedidos) {
+            if(pedido.getCodigo().equals(codigo)){
+                result = pedido;
+            }
+        }
+        return result;
+    }
+    
+    @Override
+    public Pedido inserePedido(Pedido pedido) throws WithoutFieldFault{
+    	PedidoDAO.cadastrar(pedido);
+		
+		if (pedido.getCodigo().trim().length() == 0) {
+			throw new WithoutFieldFault("Código inexistente");
+		}
+		if (pedido.getCliente() == null) {
+			throw new WithoutFieldFault("Sem cliente válido");
+		}
+		if (pedido.getPagamento() == null) {
+			throw new WithoutFieldFault("Sem pagamento válido");
+		}
+		if (pedido.getProduto() == null) {
+			throw new WithoutFieldFault("Sem produto válido");
+		}
+		if (pedido.getVendedor() == null) {
+			throw new WithoutFieldFault("Sem vendedor válido");
+		}
+		
+		return pedido;
+    }
+    
+  //funcoes fornecedor
+    @Override
+    public List<Fornecedor> todosFornecedores() {
+        return forDAO.todosFornecedores();
+    }
+    
+    @Override
+    public Fornecedor buscaFornecedor(String codigo){
+        List<Fornecedor> fornecedores = forDAO.todosFornecedores();
+        Fornecedor result = null;
+        for (Fornecedor fornecedor : fornecedores) {
+            if(fornecedor.getCodigo().equals(codigo)){
+                result = fornecedor;
+            }
+        }
+        return result;
+    }
+    
+    @Override
+    public Fornecedor insereFornecedor(Fornecedor fornecedor) throws WithoutFieldFault{
+    	FornecedorDAO.cadastrar(fornecedor);
+		
+		if (fornecedor.getCodigo().trim().length() == 0) {
+			throw new WithoutFieldFault("Código inexistente");
+		}
+		if (fornecedor.getNome() == null) {
+			throw new WithoutFieldFault("Preencha o campo nome");
+		}
+		if (fornecedor.getCnpj() == null) {
+			throw new WithoutFieldFault("Sem cnpj válido");
+		}
+		
+		return fornecedor;
     }
 }
