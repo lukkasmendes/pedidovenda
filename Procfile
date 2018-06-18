@@ -1,0 +1,1 @@
+web: java -jar target/Loja-0.0.1-SNAPSHOT-jar-with-dependencies.jar
