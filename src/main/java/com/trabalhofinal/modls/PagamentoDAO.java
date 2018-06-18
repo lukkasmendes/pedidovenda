@@ -14,6 +14,10 @@ public class PagamentoDAO {
 	public ArrayList<Pagamento> todosPagamentos(){
 		return new ArrayList<Pagamento>(CP.values());
 	}
+
+	public void cadastraPagamento(Pagamento pagamento){
+		CP.put(pagamento.getCodigo(), pagamento);
+	}
 	private void populaFakeItens() {
 		CP.put("901", new Pagamento.Builder().comCodigo("901").comNome("Cartao a vista").comParcelas(1).create());
 		CP.put("902", new Pagamento.Builder().comCodigo("902").comNome("Cartao 2x").comParcelas(2).create());

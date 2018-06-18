@@ -13,6 +13,9 @@ public class VendedorDAO {
 	public ArrayList<Vendedor> todosVendedores(){
 		return new ArrayList<Vendedor>(VV.values());
 	}
+	public void insereVendedor(Vendedor vendedor){
+		VV.put(vendedor.getCodigo(),vendedor);
+	}
 	private void populaFakeItens() {
 		VV.put("Pedro", new Vendedor.Builder().comNome("Pedro").comSobrenome("Dos Santos").comCodigo("31001").create());
 		VV.put("Paulo", new Vendedor.Builder().comNome("Paulo").comSobrenome("Corso").comCodigo("31002").create());

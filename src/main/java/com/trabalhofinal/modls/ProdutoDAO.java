@@ -13,6 +13,10 @@ public class ProdutoDAO {
 	public ArrayList<Produto> todosProdutos(){
 		return new ArrayList<Produto>(CD.values());
 	}
+
+	public void cadastraProduto(Produto produto){
+		CD.put(produto.getCodigo(), produto);
+	}
 	private void populaFakeItens() {
 		CD.put("Mouse", new Produto.Builder().comcodigo("66001").comNone("Mouse").comTipo("Informatica").comQuantidade(5).comValor(45.00).create());
 		CD.put("Mesa", new Produto.Builder().comcodigo("66002").comNone("Mesa").comTipo("Escritorio").comQuantidade(4).comValor(420.00).create());

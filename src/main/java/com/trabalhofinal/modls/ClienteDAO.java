@@ -13,6 +13,11 @@ public class ClienteDAO {
 	public ArrayList<Cliente> todosCliente(){
 		return new ArrayList<Cliente>(CC.values());
 	}
+
+	public void cadastraCliente(Cliente cliente){
+		CC.put(cliente.getCodigo(), cliente);
+	}
+
 	private void populaFakeItens() {
 		CC.put("Pedro", new Cliente.Builder().comCodigo("91001").comNome("Pedro").comSobrenome("Dos Santos").comDataNascimento(null).comCidade("Passo Fundo").comEstado("RS").create());
 		CC.put("Paulo", new Cliente.Builder().comCodigo("91002").comNome("Paulo").comSobrenome("Corso").comDataNascimento(null).comCidade("Passo Fundo").comEstado("RS").create());

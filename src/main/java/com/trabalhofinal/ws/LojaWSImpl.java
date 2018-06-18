@@ -23,8 +23,9 @@ public class LojaWSImpl implements LojaWS {
     }
 
     @Override
-    public Cliente insereCliente(){
-        return null;
+    public Cliente insereCliente(Cliente cliente){
+        cliDAO.cadastraCliente(cliente);
+        return cliente;
     }
 
     @Override
@@ -48,20 +49,18 @@ public class LojaWSImpl implements LojaWS {
 
     @Override
     public Pagamento inserePagamento(Pagamento pagamento) throws WithoutFieldFault{
-		PagamentoDAO.cadastrar(pagamento);
-		
 		if (pagamento.getCodigo().trim().length() == 0) {
 			throw new WithoutFieldFault("Código inexistente");
 		}
 		if (pagamento.getNome() == null) {
 			throw new WithoutFieldFault("Sem nome válido");
 		}
-		
+        pagDAO.cadastraPagamento(pagamento);
 		return pagamento;
     }
 
     @Override
-    public Pagamento buscaPagamento(String codigo){
+    public Pagamento buscaPagamento(String codigo) throws WithoutFieldFault{
         List<Pagamento> pagamentos = pagDAO.todosPagamentos();
         Pagamento result = null;
         for (Pagamento pagamento : pagamentos) {
@@ -69,7 +68,11 @@ public class LojaWSImpl implements LojaWS {
                 result = pagamento;
             }
         }
-        return result;
+        if (result == null){
+            throw new WithoutFieldFault("Pagamento nao encontrado");
+        }else {
+            return result;
+        }
     }
 
     //funcoes produto
@@ -78,8 +81,13 @@ public class LojaWSImpl implements LojaWS {
         return prodDAO.todosProdutos();
     }
 
+    public Produto insereProduto(Produto produto) {
+        prodDAO.cadastraProduto(produto);
+        return produto;
+    }
+
     @Override
-    public Produto buscaProduto(String codigo){
+    public Produto buscaProduto(String codigo) throws WithoutFieldFault{
         List<Produto> produtos = prodDAO.todosProdutos();
         Produto result = null;
         for (Produto produto : produtos) {
@@ -87,7 +95,11 @@ public class LojaWSImpl implements LojaWS {
                 result = produto;
             }
         }
-        return result;
+        if (result == null){
+            throw new WithoutFieldFault("Pagamento nao encontrado");
+        }else {
+            return result;
+        }
     }
 
     //funcoes vendedor
@@ -96,8 +108,13 @@ public class LojaWSImpl implements LojaWS {
         return vendDAO.todosVendedores();
     }
 
+    public Vendedor insereVendedor(Vendedor vendedor) {
+        vendDAO.insereVendedor(vendedor);
+        return vendedor;
+    }
+
     @Override
-    public Vendedor buscaVendedor(String codigo){
+    public Vendedor buscaVendedor(String codigo) throws WithoutFieldFault{
         List<Vendedor> vendedores = vendDAO.todosVendedores();
         Vendedor result = null;
         for (Vendedor vendedor : vendedores) {
@@ -105,7 +122,12 @@ public class LojaWSImpl implements LojaWS {
                 result = vendedor;
             }
         }
-        return result;
+        if (result == null){
+            throw new WithoutFieldFault("Vendedor nao encontrado");
+        }else {
+            return result;
+        }
+
     }
     
     //funcoes pedido
@@ -115,7 +137,7 @@ public class LojaWSImpl implements LojaWS {
     }
     
     @Override
-    public Pedido buscaPedido(String codigo){
+    public Pedido buscaPedido(String codigo) throws WithoutFieldFault{
         List<Pedido> pedidos = pedDAO.todosPedidos();
         Pedido result = null;
         for (Pedido pedido : pedidos) {
@@ -123,13 +145,16 @@ public class LojaWSImpl implements LojaWS {
                 result = pedido;
             }
         }
-        return result;
+        if (result == null){
+            throw new WithoutFieldFault("Pedido nao encontrado");
+        }else {
+            return result;
+        }
     }
     
     @Override
     public Pedido inserePedido(Pedido pedido) throws WithoutFieldFault{
-    	PedidoDAO.cadastrar(pedido);
-		
+
 		if (pedido.getCodigo().trim().length() == 0) {
 			throw new WithoutFieldFault("Código inexistente");
 		}
@@ -145,7 +170,9 @@ public class LojaWSImpl implements LojaWS {
 		if (pedido.getVendedor() == null) {
 			throw new WithoutFieldFault("Sem vendedor válido");
 		}
-		
+
+        pedDAO.cadastrarPedido(pedido);
+
 		return pedido;
     }
     
@@ -168,31 +195,19 @@ public class LojaWSImpl implements LojaWS {
     }
     
     @Override
-    public Fornecedor insereFornecedor(Fornecedor fornecedor) throws WithoutFieldFault{
-    	FornecedorDAO.cadastrar(fornecedor);
-		
-		if (fornecedor.getCodigo().trim().length() == 0) {
-			throw new WithoutFieldFault("Código inexistente");
-		}
-		if (fornecedor.getNome() == null) {
-			throw new WithoutFieldFault("Preencha o campo nome");
-		}
-		if (fornecedor.getCnpj() == null) {
-			throw new WithoutFieldFault("Sem cnpj válido");
-		}
-		
-		return fornecedor;
+    public Fornecedor insereFornecedor(Fornecedor fornecedor) throws WithoutFieldFault {
+        forDAO.cadastraFornecedor(fornecedor);
+
+        if (fornecedor.getCodigo().trim().length() == 0) {
+            throw new WithoutFieldFault("Código inexistente");
+        }
+        if (fornecedor.getNome() == null) {
+            throw new WithoutFieldFault("Preencha o campo nome");
+        }
+        if (fornecedor.getCnpj() == null) {
+            throw new WithoutFieldFault("Sem cnpj válido");
+        }
+
+        return fornecedor;
     }
-
-	@Override
-	public Produto insereProduto() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Vendedor insereVendedor() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
